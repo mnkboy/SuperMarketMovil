@@ -2,6 +2,8 @@
 const VentaModel =  require('../models/Venta');
 const RepartidorModel =  require('../models/Repartidor');
 const VendedorModel =  require('../models/Vendedor');
+const ClienteModel =  require('../models/Cliente');
+const HistorialModel =  require('../models/Historial');
 
 //============== Ventas ==============
 const listVentas =  async(root,params,context,info) => {
@@ -46,6 +48,30 @@ const singleVendedor  =  async(root,params,context,info) => {
 	if (!rol) throw new Error('Vendedor no existe');
 	return rol.toObject();
 };
+//============== Clientes ==============
+const listClientes =  async(root,params,context,info) => {
+	const rols = await ClienteModel.find().populate('rols');
+	console.log(rols);
+	return rols;
+};
+
+const singleCliente  =  async(root,params,context,info) => {
+	const rol =  await ClienteModel.findById(params.id);
+	if (!rol) throw new Error('Cliente no existe');
+	return rol.toObject();
+};
+//============== Historial ==============
+const listHistoriales =  async(root, params, context, info) => {
+	const historiales =  await HistorialModel.find({is_active:true}).populate('cliente');
+	return historiales
+}
+
+const singleHistorial = async(root,params, context, info) => {
+	const historial = await HistorialModel.findById(params.id).populate('cliente');
+	if(!historial) throw new Error("Historial no existe")
+	return historial.toObject();
+}
+
 //============== Export Modules ==============
 module.exports = {
 	listVentas,
@@ -54,5 +80,9 @@ module.exports = {
 	singleRepartidor,
 	loginRepartidor,
 	listVendedores,
-	singleVendedor
+	singleVendedor,
+	listClientes,
+	singleCliente,
+	listHistoriales,
+	singleHistorial
 };

@@ -9,6 +9,12 @@ type Query{
 	#Vendedor
 	listVendedores:[Vendedor]! 
 	singleVendedor(id:ID!):Vendedor!
+	#Cliente
+	listClientes:[Cliente]! 
+	singleCliente(id:ID!):Cliente!	
+	#Historial
+	listHistoriales:[Historial]! 
+	singleHistorial(id:ID!):Historial!
 }
 
 type Mutation{
@@ -20,6 +26,12 @@ type Mutation{
 	#Vendedor
 	createVendedor(data:createVendedorInput!):Vendedor!	
 	deleteVendedor(id:ID):String!
+	#Cliente
+	createCliente(data:createClienteInput!):Cliente!	
+	deleteCliente(id:ID):String!
+	#Historial
+	createHistorial(data:createHistorialCliente!):Historial!
+	deleteHistorial(id:ID):String!
 }
 
 type Auth{
@@ -81,4 +93,29 @@ type Vendedor{
 input createVendedorInput {
 	latitud:String!
 	longitud:String!	
+}
+
+#============== Cliente ==============
+type Cliente{
+	_id:ID
+	nombre:String!
+	apellido:String!
+	email:String!	
+}
+
+input createClienteInput {
+	nombre:String!
+	apellido:String!
+	email:String!
+}
+
+#============== Historial ==============
+type Historial {
+	_id:ID
+	ventaHistorica:String!
+	cliente:Cliente!	
+}
+
+input createHistorialCliente {
+	ventaHistorica:String!	
 }
