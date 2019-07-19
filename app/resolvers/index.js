@@ -5,4 +5,4 @@ const Mutation = require('./Mutation');
 module.exports = {
 	Query,
 	Mutation
-}
+};

@@ -1,38 +1,22 @@
-const AuthorModel =  require('../models/Author');
-const PostModel =  require('../models/Post');
+const VentaModel =  require('../models/Venta');
 
-const listAuthors =  async(root,params,context,info) => {
-	const authors = await AuthorModel.find({is_active:true}).populate('posts');
-	console.log(authors);
-	return authors
-}
+const listVentas =  async(root,params,context,info) => {
+	const rols = await VentaModel.find().populate('rols');
+	console.log(rols);
+	return rols;
+};
 
-const singleAuthor  =  async(root,params,context,info) => {
+const singleVenta  =  async(root,params,context,info) => {
 
-	const author =  await AuthorModel.findById(params.id).posts('posts');
-	if (!author) throw new Error("Author no existe");
+	const rol =  await VentaModel.findById(params.id);
+	if (!rol) throw new Error('Venta no existe');
 
-	return author.toObject();
-}
+	return rol.toObject();
+};
 
-const listPosts =  async(root, params, context, info) => {
 
-	const posts =  await PostModel.find({is_active:true}).populate('author');
-	return posts
-}
-
-const singlePost = async(root,params, context, info) => {
-
-	const post = await PostModel.findById(params.id).populate('author');
-	if(!post) throw new Error("Post no existe")
-
-	return post.toObject();
-
-}
 
 module.exports = {
-	listAuthors,
-	singleAuthor,
-	listPosts,
-	singlePost
-}
+	listVentas,
+	singleVenta
+};
