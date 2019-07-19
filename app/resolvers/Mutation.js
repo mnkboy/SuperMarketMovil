@@ -1,8 +1,10 @@
+//============== Imports ==============
 const VentaModel =  require('../models/Venta');
 const RepartidorModel =  require('../models/Repartidor');
+const VendedorModel =  require('../models/Vendedor');
 
+//============== Ventas ==============
 const createVenta =  async(root,params,context,info) => {
-
 	const newRol =  await VentaModel.create(params.data)
 		.catch( e => {throw new Error('Ocurrio un problema'); } );
 	if(!newRol) throw new Error('Fallo al crear venta');
@@ -10,36 +12,42 @@ const createVenta =  async(root,params,context,info) => {
 };
 
 const deleteVenta =  async(root,params,context,info) => {
-
 	const rol = await VentaModel.findById(params.id);
 	if(!rol) throw new Error('Venta no existe');
 	rol.Finalizado = true;
 	await rol.save({new:true});
-
 	return 'Venta eliminada';
 };
 
+//============== Repartidor ==============
 const createRepartidor =  async(root,params,context,info) => {
-
 	const newRepartidor =  await RepartidorModel.create(params.data)
 		.catch( e => {throw new Error('Ocurrio un problema'); } );
 	if(!newRepartidor) throw new Error('No se creo el \'repartidor\'');
 	return newRepartidor.toObject();
 };
 
-// const updateVenta = async(root,params,context,info) => {
+//============== Vendedor ==============
+const createVendedor =  async(root,params,context,info) => {
+	const newRol =  await VendedorModel.create(params.data)
+		.catch( e => {throw new Error('Ocurrio un problema'); } );
+	if(!newRol) throw new Error('Fallo al crear vendedor');
+	return newRol.toObject();
+};
 
-// 	const {id,data} = params;
+const deleteVendedor =  async(root,params,context,info) => {
+	const rol = await VendedorModel.findById(params.id);
+	if(!rol) throw new Error('Vendedor no existe');
+	rol.Finalizado = true;
+	await rol.save({new:true});
+	return 'Vendedor eliminada';
+};
 
-// 	const updatedVenta = await VentaModel.findOneAndUpdate({_id:id},{$set:{...data}},{new:true});
-
-// 	return updatedVenta.toObject();
-
-// };
-
+//============== Export Modules ==============
 module.exports = {
 	createVenta,
 	deleteVenta,
-        createRepartidor
-	//updateVenta
+	createRepartidor,
+	createVendedor,
+	deleteVendedor
 };

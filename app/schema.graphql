@@ -1,22 +1,49 @@
 type Query{
+	#Ventas
 	listVentas:[Venta]! 
 	singleVenta(id:ID!):Venta!
-        listaRepartidor:[Repartidor]!
+	#Repartidor
+    listaRepartidor:[Repartidor]!
 	singleRepartidor(id:ID!):Repartidor!
 	loginRepartidor(correo:String!, contrasena:String!):Auth!
+	#Vendedor
+	listVendedores:[Vendedor]! 
+	singleVendedor(id:ID!):Vendedor!
 }
 
 type Mutation{
+	#Ventas
 	createVenta(data:createVentaInput!):Venta!	
-	deleteVenta(id:ID):String!
-	#updateVenta(data:updateVentaInput!):Venta!
-        createRepartidor(data:createRepartidorInput!):Repartidor!
+	deleteVenta(id:ID):String!	
+	#Ventas
+    createRepartidor(data:createRepartidorInput!):Repartidor!
+	#Vendedor
+	createVendedor(data:createVendedorInput!):Vendedor!	
+	deleteVendedor(id:ID):String!
 }
 
 type Auth{
     message:String!
 }
 
+
+#============== Ventas ==============
+type Venta{
+	_id:ID
+	Descripcion:String!
+	Entregado:Boolean!
+	Pagado: Boolean!
+	Finalizado: Boolean!	
+}
+
+input createVentaInput {
+	Descripcion:String!
+	Entregado:Boolean!
+	Pagado: Boolean!
+	Finalizado: Boolean!
+}
+
+#============== Repartidor ==============
 type Repartidor{
     _id:ID
 	nombre:String!
@@ -35,33 +62,23 @@ input createRepartidorInput{
 	contrasena:String!
 	activo:Boolean!
 }
-
-type Venta{
-	_id:ID
-	Descripcion:String!
-	Entregado:Boolean!
-	Pagado: Boolean!
-	Finalizado: Boolean!	
-}
-
-input createVentaInput {
-	Descripcion:String!
-	Entregado:Boolean!
-	Pagado: Boolean!
-	Finalizado: Boolean!
-}
-
-# input updateVentaInput {
-# 	Descripcion:String!
-# 	Entregado:Boolean!
-# 	Pagado: Boolean!
-# 	Finalizado: Boolean!
-# }
-
+#============== Propuesta ==============
 type Propuesta{
 	_id:ID
 	Monto:String!
 	Aceptado:Boolean!
 	FechaCompra: Boolean!
 	Finalizado: Boolean!	
+}
+
+#============== Vendedor ==============
+type Vendedor{
+	_id:ID
+	latitud:String!
+	longitud:String!	
+}
+
+input createVendedorInput {
+	latitud:String!
+	longitud:String!	
 }

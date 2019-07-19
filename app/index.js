@@ -19,13 +19,6 @@ const mongo =  mongoose.connection;
 mongo.on('error', (error) => console.log(error))
 	 .once('open', () => console.log("Connected to database"));
 
-/* const resolvers = {
-	Query:{
-		prueba: () => "Hola desde graphql",
-		saludo: (_,{texto}) => `Hola ${texto}`
-	}
-} */
-
 const schema =  makeExecutableSchema({
 	typeDefs,
 	resolvers,
