@@ -15,8 +15,34 @@ const singleVenta  =  async(root,params,context,info) => {
 };
 
 
+// eslint-disable-next-line no-unused-vars
+const listaRepartidor =  async(root,params,context,info) => {
+	const repartidores = await RepartidorModel.find().populate('repartidor');
+	console.log(repartidores);
+	return repartidores;
+};
+
+// eslint-disable-next-line no-unused-vars
+const singleRepartidor  =  async(root,params,context,info) => {
+
+	const repartidor =  await RepartidorModel.findById(params.id);
+	if (!repartidor) throw new Error('Repartidor no existe');
+
+	return repartidor.toObject();
+};
+
+const loginRepartidor = async(root,params,context,info) => {
+
+	const repartidor =  await RepartidorModel.find({correo:params.correo, contrasena:params.contrasena});
+	if (!repartidor) throw new Error('Usuario o contraseña incorrectos 1');
+	return {message:'Success'};
+};
+
 
 module.exports = {
 	listVentas,
-	singleVenta
+	singleVenta,
+        listaRepartidor, 
+	singleRepartidor,
+	loginRepartidor
 };

@@ -1,12 +1,39 @@
 type Query{
 	listVentas:[Venta]! 
 	singleVenta(id:ID!):Venta!
+        listaRepartidor:[Repartidor]!
+	singleRepartidor(id:ID!):Repartidor!
+	loginRepartidor(correo:String!, contrasena:String!):Auth!
 }
 
 type Mutation{
 	createVenta(data:createVentaInput!):Venta!	
 	deleteVenta(id:ID):String!
 	#updateVenta(data:updateVentaInput!):Venta!
+        createRepartidor(data:createRepartidorInput!):Repartidor!
+}
+
+type Auth{
+    message:String!
+}
+
+type Repartidor{
+    _id:ID
+	nombre:String!
+	apellido:String!
+	correo:String!
+	nombre_usuario:String!
+	contrasena:String!
+	activo:Boolean!
+}
+
+input createRepartidorInput{
+	nombre:String!
+	apellido:String!
+	correo:String!
+	nombre_usuario:String!
+	contrasena:String!
+	activo:Boolean!
 }
 
 type Venta{

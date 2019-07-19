@@ -1,4 +1,5 @@
 const VentaModel =  require('../models/Venta');
+const RepartidorModel =  require('../models/Repartidor');
 
 const createVenta =  async(root,params,context,info) => {
 
@@ -18,6 +19,14 @@ const deleteVenta =  async(root,params,context,info) => {
 	return 'Venta eliminada';
 };
 
+const createRepartidor =  async(root,params,context,info) => {
+
+	const newRepartidor =  await RepartidorModel.create(params.data)
+		.catch( e => {throw new Error('Ocurrio un problema'); } );
+	if(!newRepartidor) throw new Error('No se creo el \'repartidor\'');
+	return newRepartidor.toObject();
+};
+
 // const updateVenta = async(root,params,context,info) => {
 
 // 	const {id,data} = params;
@@ -30,6 +39,7 @@ const deleteVenta =  async(root,params,context,info) => {
 
 module.exports = {
 	createVenta,
-	deleteVenta
+	deleteVenta,
+        createRepartidor
 	//updateVenta
 };
